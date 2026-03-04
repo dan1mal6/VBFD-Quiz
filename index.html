@@ -281,6 +281,21 @@
       gap: 1rem;
     }
 
+    .exit-quiz-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      padding: .35rem .9rem;
+      border-radius: 6px;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .exit-quiz-btn:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
     .quiz-progress-label {
       font-size: .85rem;
       opacity: .8;
@@ -920,6 +935,7 @@
         <div class="quiz-progress-label">Score</div>
         <div class="quiz-progress-num" id="score-label">0</div>
       </div>
+      <button class="exit-quiz-btn" onclick="exitQuiz()">✕ Exit</button>
     </div>
 
     <div class="quiz-body" id="quiz-body">
@@ -1010,6 +1026,17 @@
       renderCategoryGrid();
       updateStartBtn();
       showScreen('screen-category');
+    }
+
+    // ── EXIT QUIZ ────────────────────────────────────────────────────────────────
+    function exitQuiz() {
+      if (confirm('Exit the quiz? Your current progress will be lost.')) {
+        score = 0;
+        quizQuestions = [];
+        currentQIndex = 0;
+        quizResults = [];
+        goToCategory();
+      }
     }
 
     function renderCategoryGrid() {
