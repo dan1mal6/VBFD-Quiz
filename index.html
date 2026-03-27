@@ -103,6 +103,25 @@
       box-shadow: 0 8px 24px rgba(243, 156, 18, .5);
     }
 
+    #screen-welcome .btn-primary {
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 4px 16px rgba(243, 156, 18, .4);
+      }
+
+      50% {
+        box-shadow: 0 8px 32px rgba(243, 156, 18, .7);
+        transform: translateY(-1px) scale(1.02);
+      }
+
+      100% {
+        box-shadow: 0 4px 16px rgba(243, 156, 18, .4);
+      }
+    }
+
     .btn-primary:active {
       transform: translateY(0);
     }
@@ -265,6 +284,47 @@
       transform: none;
     }
 
+    /* ── LOADING OVERLAY ── */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 39, 68, 0.9);
+      backdrop-filter: blur(8px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: white;
+    }
+
+    #loading-overlay.visible {
+      display: flex;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
     /* ── QUIZ SCREEN ── */
     #screen-quiz {
       background: var(--grey);
@@ -282,8 +342,8 @@
     }
 
     .exit-quiz-btn {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       color: var(--white);
       padding: .35rem .9rem;
       border-radius: 6px;
@@ -292,8 +352,9 @@
       transition: background .2s;
       white-space: nowrap;
     }
+
     .exit-quiz-btn:hover {
-      background: rgba(255,255,255,0.28);
+      background: rgba(255, 255, 255, 0.28);
     }
 
     .quiz-progress-label {
@@ -868,10 +929,162 @@
         padding: 1rem;
       }
     }
+
+    /* ── FLAG FEATURE ─────────────────────────────────────────────────────────── */
+
+    .flag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: transparent;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: .3rem .7rem;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--text-sm);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      margin-top: .4rem;
+      align-self: flex-start;
+    }
+    .flag-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: #fffbef;
+    }
+    .flag-btn.flagged {
+      border-color: var(--gold);
+      background: var(--gold-lt);
+      color: #7d5a00;
+    }
+
+    #flag-float-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--navy);
+      color: var(--gold);
+      border: none;
+      border-radius: 50px;
+      padding: .55rem 1.1rem;
+      font-size: .82rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      gap: .4rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    #flag-float-btn.visible { display: flex; }
+    #flag-float-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    #flag-float-btn .flag-count-badge {
+      background: var(--red);
+      color: white;
+      border-radius: 99px;
+      padding: .1rem .45rem;
+      font-size: .72rem;
+      font-weight: 900;
+      min-width: 18px;
+      text-align: center;
+      display: none;
+    }
+    #flag-float-btn .flag-count-badge.has-flags { display: inline-block; }
+
+    #flagged-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+    }
+    #flagged-modal.open { display: flex; }
+    .flagged-modal-inner {
+      background: var(--white);
+      border-radius: var(--radius) var(--radius) 0 0;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+    .flagged-modal-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .flagged-modal-header h3 { font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: .5rem; }
+    .flagged-modal-close { background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: .2rem; }
+    .flagged-modal-body { overflow-y: auto; padding: 1rem 1.4rem; flex: 1; }
+    .flagged-empty { text-align: center; padding: 2rem 1rem; color: var(--text-sm); font-size: .95rem; }
+    .flagged-item {
+      border: 1.5px solid #e0e0e0;
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: .9rem 1rem;
+      margin-bottom: .75rem;
+      background: #fffbef;
+      position: relative;
+    }
+    .flagged-item-q { font-weight: 700; font-size: .9rem; color: var(--navy); margin-bottom: .5rem; line-height: 1.4; }
+    .flagged-item-meta { font-size: .75rem; color: var(--text-sm); margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
+    .flagged-item-choices { font-size: .82rem; color: var(--text); line-height: 1.6; margin-bottom: .4rem; }
+    .flagged-item-answer { font-size: .82rem; font-weight: 700; color: #1e8449; }
+    .unflag-btn {
+      position: absolute; top: .7rem; right: .7rem;
+      background: none; border: 1.5px solid #ccc; border-radius: 6px;
+      padding: .2rem .5rem; font-size: .72rem; cursor: pointer; color: var(--text-sm);
+      transition: border-color .15s, color .15s;
+    }
+    .unflag-btn:hover { border-color: var(--red); color: var(--red); }
+    .flagged-modal-footer {
+      padding: .9rem 1.4rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .btn-copy-flags {
+      background: var(--navy); color: var(--white); border: none;
+      border-radius: 8px; padding: .65rem 1.2rem; font-size: .88rem;
+      font-weight: 700; cursor: pointer; flex: 1; transition: background .15s;
+    }
+    .btn-copy-flags:hover { background: var(--navy-lt); }
+    .btn-clear-flags {
+      background: transparent; color: var(--red); border: 1.5px solid var(--red);
+      border-radius: 8px; padding: .65rem 1.2rem; font-size: .88rem;
+      font-weight: 700; cursor: pointer; transition: background .15s, color .15s;
+    }
+    .btn-clear-flags:hover { background: var(--red); color: white; }
+
+    @media (min-width: 540px) {
+      #flagged-modal { align-items: center; padding: 1.5rem; }
+      .flagged-modal-inner { border-radius: var(--radius); max-height: 80vh; }
+    }
+
   </style>
 </head>
 
 <body>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-text">Preparing your exam...</p>
+  </div>
 
   <!-- ══════════════════════════════════════
      SCREEN 1: WELCOME
@@ -958,8 +1171,8 @@
       <ul class="breakdown-list" id="breakdown-list"></ul>
       <div class="results-actions">
         <button class="btn-outline" onclick="restartSameTopic()">Retake</button>
-        <button class="btn-primary" style="font-size:.9rem; padding:.75rem 1.6rem;" onclick="goToCategory()">New
-          Topic</button>
+        <button class="btn-primary" style="font-size:.9rem; padding:.75rem 1.6rem;" onclick="goToCategory()">New Topic</button>
+        <button class="btn-outline" onclick="showFlaggedPanel()" id="results-flag-btn" style="border-color:var(--gold);color:#7d5a00;">🚩 Flagged (<span id="results-flag-count">0</span>)</button>
       </div>
     </div>
 
@@ -968,6 +1181,29 @@
       <div id="review-items"></div>
     </div>
   </section>
+
+  <!-- ── FLOATING FLAG BUTTON ── -->
+  <button id="flag-float-btn" onclick="showFlaggedPanel()">
+    🚩 Flagged
+    <span class="flag-count-badge" id="flag-count-badge">0</span>
+  </button>
+
+  <!-- ── FLAGGED QUESTIONS MODAL ── -->
+  <div id="flagged-modal" role="dialog" aria-modal="true" aria-label="Flagged Questions">
+    <div class="flagged-modal-inner">
+      <div class="flagged-modal-header">
+        <h3>🚩 Flagged Questions</h3>
+        <button class="flagged-modal-close" onclick="closeFlaggedPanel()" aria-label="Close">✕</button>
+      </div>
+      <div class="flagged-modal-body" id="flagged-modal-body">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="flagged-modal-footer">
+        <button class="btn-copy-flags" onclick="copyFlaggedToClipboard()">📋 Copy to Clipboard</button>
+        <button class="btn-clear-flags" onclick="clearAllFlags()">🗑 Clear All Flags</button>
+      </div>
+    </div>
+  </div>
 
   <!-- TOAST -->
   <div id="toast"></div>
@@ -1002,6 +1238,16 @@
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
+      // Show floating flag button only on quiz and results screens
+      const floatBtn = document.getElementById('flag-float-btn');
+      if (floatBtn) {
+        if (id === 'screen-quiz' || id === 'screen-results') {
+          floatBtn.classList.add('visible');
+          updateFlagUI();
+        } else {
+          floatBtn.classList.remove('visible');
+        }
+      }
     }
 
     function showToast(msg, duration = 2000) {
@@ -1089,46 +1335,57 @@
 
     // ── BUILD QUIZ ──────────────────────────────────────────────────────────────
     function startQuiz() {
-      const count = parseInt(document.getElementById('q-count-select').value);
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('visible');
 
-      // Gather pool
-      let pool = [];
-      if (selectedCategory === '__all__') {
-        Object.values(QUESTION_BANK).forEach(arr => pool.push(...arr));
-      } else {
-        pool = [...QUESTION_BANK[selectedCategory]];
-      }
+      // Small delay to allow overlay to show
+      setTimeout(() => {
+        try {
+          const count = parseInt(document.getElementById('q-count-select').value);
 
-      // Shuffle and slice; if pool smaller than count, repeat/cycle
-      let selected = [];
-      if (pool.length === 0) {
-        showToast('No questions available for this topic.');
-        return;
-      }
-      while (selected.length < count) {
-        selected = [...selected, ...shuffle(pool)];
-      }
-      selected = selected.slice(0, count);
-
-      // Tag each question with its category
-      if (selectedCategory === '__all__') {
-        selected = selected.map(q => {
-          for (const [cat, arr] of Object.entries(QUESTION_BANK)) {
-            if (arr.includes(q)) return { ...q, _category: cat };
+          // Gather pool
+          let pool = [];
+          if (selectedCategory === '__all__') {
+            Object.values(QUESTION_BANK).forEach(arr => pool.push(...arr));
+          } else {
+            pool = [...QUESTION_BANK[selectedCategory]];
           }
-          return { ...q, _category: 'General' };
-        });
-      } else {
-        selected = selected.map(q => ({ ...q, _category: selectedCategory }));
-      }
 
-      quizQuestions = selected;
-      currentQIndex = 0;
-      score = 0;
-      quizResults = [];
+          // Shuffle and slice; if pool smaller than count, repeat/cycle
+          let selected = [];
+          if (pool.length === 0) {
+            overlay.classList.remove('visible');
+            showToast('No questions available for this topic.');
+            return;
+          }
+          while (selected.length < count) {
+            selected = [...selected, ...shuffle(pool)];
+          }
+          selected = selected.slice(0, count);
 
-      showScreen('screen-quiz');
-      renderQuestion();
+          // Tag each question with its category
+          if (selectedCategory === '__all__') {
+            selected = selected.map(q => {
+              for (const [cat, arr] of Object.entries(QUESTION_BANK)) {
+                if (arr.includes(q)) return { ...q, _category: cat };
+              }
+              return { ...q, _category: 'General' };
+            });
+          } else {
+            selected = selected.map(q => ({ ...q, _category: selectedCategory }));
+          }
+
+          quizQuestions = selected;
+          currentQIndex = 0;
+          score = 0;
+          quizResults = [];
+
+          showScreen('screen-quiz');
+          renderQuestion();
+        } finally {
+          overlay.classList.remove('visible');
+        }
+      }, 300);
     }
 
     // ── RENDER QUESTION ─────────────────────────────────────────────────────────
@@ -1167,6 +1424,17 @@
       fb.className = 'feedback-box';
       fb.id = 'feedback-box';
       body.appendChild(fb);
+
+      // Flag button — inserted before feedback box
+      const flagBtn = document.createElement('button');
+      flagBtn.className = 'flag-btn';
+      flagBtn.id = 'inline-flag-btn';
+      const flaggedNow = getFlaggedQuestions();
+      const isAlreadyFlagged = !!flaggedNow[q.question];
+      flagBtn.textContent = isAlreadyFlagged ? '🚩 Flagged' : '🚩 Flag';
+      if (isAlreadyFlagged) flagBtn.classList.add('flagged');
+      flagBtn.addEventListener('click', toggleCurrentFlag);
+      body.insertBefore(flagBtn, fb);
 
       // Next button
       const nextBtn = document.createElement('button');
@@ -1521,10 +1789,249 @@
       startQuiz();
     }
 
+    // ── FLAG FEATURE ─────────────────────────────────────────────────────────────
+
+    const FLAG_STORAGE_KEY = 'vbfd_flagged_questions';
+
+    /** Returns the flagged questions map from localStorage. Shape: { [questionText]: questionObj } */
+    function getFlaggedQuestions() {
+      try {
+        const raw = localStorage.getItem(FLAG_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    /** Saves a question object to the flagged map using question text as key. */
+    function flagQuestion(questionObj) {
+      const flagged = getFlaggedQuestions();
+      const key = questionObj.question;
+      if (!flagged[key]) {
+        flagged[key] = questionObj;
+        try {
+          localStorage.setItem(FLAG_STORAGE_KEY, JSON.stringify(flagged));
+        } catch (e) {
+          showToast('Could not save flag — storage full?', 2500);
+          return false;
+        }
+      }
+      updateFlagUI();
+      return true;
+    }
+
+    /** Removes a question from the flagged map by its question text key. */
+    function unflagQuestion(questionKey) {
+      const flagged = getFlaggedQuestions();
+      delete flagged[questionKey];
+      try {
+        localStorage.setItem(FLAG_STORAGE_KEY, JSON.stringify(flagged));
+      } catch (e) { /* ignore */ }
+      updateFlagUI();
+    }
+
+    /** Clears all flagged questions after user confirmation. */
+    function clearAllFlags() {
+      const flagged = getFlaggedQuestions();
+      const count = Object.keys(flagged).length;
+      if (count === 0) { showToast('No flagged questions to clear.', 1800); return; }
+      if (!confirm(`Clear all ${count} flagged question${count > 1 ? 's' : ''}? This cannot be undone.`)) return;
+      localStorage.removeItem(FLAG_STORAGE_KEY);
+      updateFlagUI();
+      const modal = document.getElementById('flagged-modal');
+      if (modal.classList.contains('open')) renderFlaggedModalBody();
+      showToast('All flags cleared.', 1800);
+    }
+
+    /** Updates badge counts and button states across all UI locations. */
+    function updateFlagUI() {
+      const flagged = getFlaggedQuestions();
+      const count = Object.keys(flagged).length;
+
+      const badge = document.getElementById('flag-count-badge');
+      if (badge) {
+        badge.textContent = count;
+        badge.classList.toggle('has-flags', count > 0);
+      }
+
+      const resultsCount = document.getElementById('results-flag-count');
+      if (resultsCount) resultsCount.textContent = count;
+
+      const inlineBtn = document.getElementById('inline-flag-btn');
+      if (inlineBtn) {
+        const currentQ = quizQuestions[currentQIndex];
+        if (currentQ) {
+          const isFlagged = !!flagged[currentQ.question];
+          inlineBtn.classList.toggle('flagged', isFlagged);
+          inlineBtn.textContent = isFlagged ? '🚩 Flagged' : '🚩 Flag';
+        }
+      }
+    }
+
+    /** Toggles flag state for the current question. Called by inline flag button. */
+    function toggleCurrentFlag() {
+      const q = quizQuestions[currentQIndex];
+      if (!q) return;
+      // Attach category info so the modal can display it
+      const qWithCat = Object.assign({}, q, { _category: selectedCategory });
+      const flagged = getFlaggedQuestions();
+      if (flagged[q.question]) {
+        unflagQuestion(q.question);
+        showToast('Flag removed.', 1500);
+      } else {
+        flagQuestion(qWithCat);
+        showToast('Question flagged! View in 🚩 Flagged panel.', 1800);
+      }
+    }
+
+    /** Opens the flagged questions modal. */
+    function showFlaggedPanel() {
+      renderFlaggedModalBody();
+      document.getElementById('flagged-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    /** Closes the flagged questions modal. */
+    function closeFlaggedPanel() {
+      document.getElementById('flagged-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /** Renders the scrollable list of flagged questions inside the modal. */
+    function renderFlaggedModalBody() {
+      const body = document.getElementById('flagged-modal-body');
+      const flagged = getFlaggedQuestions();
+      const entries = Object.entries(flagged);
+
+      if (entries.length === 0) {
+        body.innerHTML = `<div class="flagged-empty">No flagged questions yet.<br><br>During the quiz, tap <strong>🚩 Flag</strong> on any question to add it here.</div>`;
+        return;
+      }
+
+      body.innerHTML = '';
+      const typeLabelMap = { multiple_choice: 'Multiple Choice', matching: 'Matching', short_answer: 'Short Answer' };
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+      entries.forEach(([key, q]) => {
+        const item = document.createElement('div');
+        item.className = 'flagged-item';
+
+        let choicesHtml = '';
+        if (q.type === 'multiple_choice' && q.choices) {
+          choicesHtml = `<div class="flagged-item-choices">` +
+            q.choices.map((c, i) => `${letters[i]}. ${c}${i === q.answer ? ' ✓' : ''}`).join('<br>') +
+            `</div><div class="flagged-item-answer">Correct: ${q.choices[q.answer]}</div>`;
+        } else if (q.type === 'matching' && q.pairs) {
+          choicesHtml = `<div class="flagged-item-choices">` +
+            q.pairs.map(p => `${p.term} → ${p.definition}`).join('<br>') + `</div>`;
+        } else if (q.type === 'short_answer' && q.correctAnswer) {
+          choicesHtml = `<div class="flagged-item-answer">Correct answer: ${q.correctAnswer}</div>`;
+        }
+
+        item.innerHTML = `
+          <div class="flagged-item-meta">${q._category || 'Unknown'} · ${typeLabelMap[q.type] || q.type}</div>
+          <div class="flagged-item-q">${q.question}</div>
+          ${choicesHtml}
+          ${q.explanation ? `<div style="font-size:.78rem;color:var(--text-sm);font-style:italic;margin-top:.4rem">${q.explanation}</div>` : ''}
+          <button class="unflag-btn" onclick="unflagAndRefresh(${JSON.stringify(key)})">Remove</button>
+        `;
+        body.appendChild(item);
+      });
+    }
+
+    /** Removes a flag and re-renders the modal body without closing it. */
+    function unflagAndRefresh(questionKey) {
+      unflagQuestion(questionKey);
+      renderFlaggedModalBody();
+      showToast('Flag removed.', 1500);
+    }
+
+    /** Formats all flagged questions as clean markdown text and copies to clipboard. */
+    function copyFlaggedToClipboard() {
+      const flagged = getFlaggedQuestions();
+      const entries = Object.entries(flagged);
+      if (entries.length === 0) { showToast('No flagged questions to copy.', 1800); return; }
+
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+      const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const lines = [
+        '# VBFD Quiz — Flagged Questions for Review',
+        `# Generated: ${today}`,
+        `# Total flagged: ${entries.length}`,
+        '', '---', ''
+      ];
+
+      entries.forEach(([key, q], idx) => {
+        lines.push(`## Question ${idx + 1}`);
+        lines.push(`Category: ${q._category || 'Unknown'}`);
+        lines.push(`Type: ${q.type}`);
+        lines.push('');
+        lines.push(`Q: ${q.question}`);
+        lines.push('');
+
+        if (q.type === 'multiple_choice' && q.choices) {
+          q.choices.forEach((c, i) => lines.push(`  ${letters[i]}. ${c}  ${i === q.answer ? '[CORRECT]' : ''}`));
+          lines.push('');
+          lines.push(`Correct Answer: ${letters[q.answer]}. ${q.choices[q.answer]}`);
+        } else if (q.type === 'matching' && q.pairs) {
+          lines.push('Pairs (Term → Definition):');
+          q.pairs.forEach(p => lines.push(`  ${p.term} → ${p.definition}`));
+          lines.push('');
+          lines.push('Correct Answer: Match all pairs above.');
+        } else if (q.type === 'short_answer') {
+          lines.push(`Correct Answer: ${q.correctAnswer || '(see explanation)'}`);
+          if (q.keywords && q.keywords.length) lines.push(`Keywords: ${q.keywords.join(', ')}`);
+        }
+
+        if (q.explanation) { lines.push(''); lines.push(`Explanation: ${q.explanation}`); }
+        lines.push(''); lines.push('---'); lines.push('');
+      });
+
+      lines.push('# END OF FLAGGED QUESTIONS');
+      lines.push('# Please review the above for accuracy and update the question files as needed.');
+
+      const text = lines.join('\n');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(() => showToast(`✅ Copied ${entries.length} question${entries.length > 1 ? 's' : ''} to clipboard!`, 2500))
+          .catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    /** Fallback clipboard copy for older browsers. */
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('✅ Copied to clipboard!', 2500);
+      } catch (e) {
+        showToast('Copy failed — try selecting text manually.', 2500);
+      }
+      document.body.removeChild(ta);
+    }
+
+    // Close modal when clicking the backdrop
+    document.getElementById('flagged-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeFlaggedPanel();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeFlaggedPanel();
+    });
+
     // ── INIT ──────────────────────────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
       // Render categories on load so they're ready
       renderCategoryGrid();
+      updateFlagUI(); // restore badge count from localStorage on page load
     });
   </script>
 </body>
