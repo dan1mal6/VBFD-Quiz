@@ -1830,17 +1830,30 @@
       updateFlagUI();
     }
 
-    /** Clears all flagged questions after user confirmation. */
+    /** Clears all flagged questions — two-tap confirmation to avoid browser popup. */
+    let _clearFlagsPending = false;
     function clearAllFlags() {
       const flagged = getFlaggedQuestions();
       const count = Object.keys(flagged).length;
       if (count === 0) { showToast('No flagged questions to clear.', 1800); return; }
-      if (!confirm(`Clear all ${count} flagged question${count > 1 ? 's' : ''}? This cannot be undone.`)) return;
+      if (!_clearFlagsPending) {
+        _clearFlagsPending = true;
+        const btn = document.querySelector('.btn-clear-flags');
+        if (btn) { btn.textContent = '⚠️ Tap again to confirm'; btn.style.background = 'var(--red)'; btn.style.color = 'white'; }
+        setTimeout(() => {
+          _clearFlagsPending = false;
+          const b = document.querySelector('.btn-clear-flags');
+          if (b) { b.textContent = '🗑 Clear All Flags'; b.style.background = ''; b.style.color = ''; }
+        }, 3000);
+        return;
+      }
+      _clearFlagsPending = false;
       localStorage.removeItem(FLAG_STORAGE_KEY);
       updateFlagUI();
-      const modal = document.getElementById('flagged-modal');
-      if (modal.classList.contains('open')) renderFlaggedModalBody();
+      renderFlaggedModalBody();
       showToast('All flags cleared.', 1800);
+      const btn = document.querySelector('.btn-clear-flags');
+      if (btn) { btn.textContent = '🗑 Clear All Flags'; btn.style.background = ''; btn.style.color = ''; }
     }
 
     /** Updates badge counts and button states across all UI locations. */
@@ -1933,8 +1946,13 @@
           <div class="flagged-item-q">${q.question}</div>
           ${choicesHtml}
           ${q.explanation ? `<div style="font-size:.78rem;color:var(--text-sm);font-style:italic;margin-top:.4rem">${q.explanation}</div>` : ''}
-          <button class="unflag-btn" onclick="unflagAndRefresh(${JSON.stringify(key)})">Remove</button>
+          <button class="unflag-btn">Remove</button>
         `;
+        // Attach listener via JS — avoids breakage from apostrophes/quotes in question text
+        const removeBtn = item.querySelector('.unflag-btn');
+        removeBtn.addEventListener('click', function() {
+          unflagAndRefresh(key);
+        });
         body.appendChild(item);
       });
     }
