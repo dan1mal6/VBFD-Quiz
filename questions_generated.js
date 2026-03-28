@@ -2044,13 +2044,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "When both spouses work for the City of Virginia Beach, what is their combined FML leave entitlement for the birth or placement of a child?",
-      choices: ["12 weeks each (24 weeks total)", "12 weeks combined", "6 weeks each (12 weeks total)", "18 weeks combined"],
-      answer: 1,
-      explanation: "According to Section 4.2.4, when both spouses work for the City, they are entitled to a combined total of 12 weeks of FML leave for birth, adoption, or foster care placement."
-    },
-    {
-      type: "multiple_choice",
       question: "How many workweeks of unpaid leave may an eligible employee take to care for a covered service member with a serious injury or illness?",
       choices: ["12 workweeks", "18 workweeks", "24 workweeks", "26 workweeks"],
       answer: 3,
@@ -4977,13 +4970,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["Early second alarm escalation and elevator control", "Timely decisions based on ECCS comments and aggressive interior fire attack", "Establishment of Base and Staging operations", "Consistent assignment confirmation and playbook adherence"],
       answer: 1,
       explanation: "The bulletin highlights that crews at Ferry Point 'made timely decisions based on ECCS comments, committed to an aggressive interior fire attack, and prioritized a rapid primary search' which led to the successful rescue."
-    },
-    {
-      type: "multiple_choice",
-      question: "Why is Ladder 33 currently out of service according to the Apparatus Update?",
-      choices: ["Engine replacement", "Graphics installation", "Bucket repairs", "Routine maintenance"],
-      answer: 2,
-      explanation: "The bulletin states that 'Ladder 33 is still out of service for bucket repairs' in the apparatus update section."
     },
     {
       type: "multiple_choice",
@@ -18707,13 +18693,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "When completing a schedule that coordinates the completion of tasks and projects (NFPA 4.2.6), which of the following must be considered?",
-      choices: ["Only emergency response coverage", "All leave requests and scheduled off days", "Budget limitations only", "Equipment maintenance schedules only"],
-      answer: 1,
-      explanation: "According to Project #2, when completing a schedule that coordinates tasks and projects, all leave requests and scheduled off days must be considered, along with ensuring tasks/projects are scheduled, training is completed, and priorities are set."
-    },
-    {
-      type: "multiple_choice",
       question: "When recommending action for member-related problems (NFPA 4.2.4), a Fire Officer I must accomplish all of the following EXCEPT:",
       choices: ["Identify the member problem", "Follow departmental policy", "Recommend appropriate course of action", "Issue formal disciplinary action independently"],
       answer: 3,
@@ -18763,13 +18742,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "When completing a schedule that coordinates the completion of tasks and projects (Project #2), which of the following must be considered?",
-      choices: ["Only training requirements", "All leave requests and scheduled off days", "Only emergency response priorities", "Budget constraints only"],
-      answer: 1,
-      explanation: "According to Project #2 (NFPA 4.2.6), when completing a schedule that coordinates tasks and projects, all leave requests and scheduled off days must be considered, along with ensuring tasks/projects are scheduled to be completed, training is completed, and priorities are set."
-    },
-    {
-      type: "multiple_choice",
       question: "Which project requires a Fire Officer I candidate to follow department policy, maintain station level staffing, and use written communication?",
       choices: ["Project #3 - Recommend Action for Member-Related Problems", "Project #4 - Respond to an Employee Grievance", "Project #5 - Implementing a New Policy", "Project #8 - Conduct an Initial Accident Investigation"],
       answer: 1,
@@ -18781,13 +18753,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["Budget approval and vendor selection only", "Training requirements, communication process, and member responsibilities", "Only safety concerns and exposure reports", "Staffing schedules and overtime requests"],
       answer: 1,
       explanation: "Project #5 (NFPA 4.4.1, 4.7.1, 4.7.3) requires an informal written document that includes details on how changes are implemented, training requirements, communication process, member responsibilities, completion of required reports including exposures, and identification of safety concerns."
-    },
-    {
-      type: "multiple_choice",
-      question: "According to the grading rubric for Project #6 (Prepare a Budget Request), what criteria must be met to earn the maximum 5 points?",
-      choices: ["Recognizes needs, completes budget request, request is supported by data, and utilizes proper format", "Follows department policy and maintains staffing levels", "Interviews witnesses and makes recommendations", "Identifies hazards and completes required forms"],
-      answer: 0,
-      explanation: "Project #6 (NFPA 4.4.3) awards 5 points for preparing a budget request that recognizes needs, completes the budget request, supports the request with data, and utilizes proper format."
     },
     {
       type: "multiple_choice",
@@ -19967,13 +19932,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "When conducting non-emergency inspections, what must the local ordinance provide for if entry is refused?",
-      choices: ["Immediate arrest authority", "The issuance of an inspection warrant", "Automatic code violation citations", "Authority to force entry"],
-      answer: 1,
-      explanation: "The local ordinance that grants inspection authority must also provide for the issuance of an inspection warrant if entry is refused by the property owner or occupant."
-    },
-    {
-      type: "multiple_choice",
       question: "What critical mistake does the text warn against when inspecting older buildings?",
       choices: ["Failing to document all existing conditions", "Applying current code requirements to existing structures when the code doesn't explicitly cover them", "Not bringing enough personnel for the inspection", "Conducting the inspection without notifying the property owner"],
       answer: 1,
@@ -20251,13 +20209,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["To allow a union representative to negotiate a salary increase", "To ensure an employee is not dismissed without due process and has a chance to defend themselves", "To determine if a crime has been committed", "To mediate a conflict between two peers"],
       answer: 1,
       explanation: "A Loudermill hearing ensures that public employees receive due process before being dismissed, giving them an opportunity to hear the charges against them and defend themselves."
-    },
-    {
-      type: "multiple_choice",
-      question: "Which type of evaluation is an ongoing process throughout an employee's career?",
-      choices: ["Summative evaluation", "Formative evaluation", "Punitive evaluation", "Fiscal evaluation"],
-      answer: 1,
-      explanation: "Formative evaluation is an ongoing, continuous process throughout an employee's career designed to provide feedback and support professional development."
     },
     {
       type: "multiple_choice",
@@ -20968,13 +20919,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "Which component of active listening involves critically analyzing information to determine how accurate it is?",
-      choices: ["Understanding", "Evaluating", "Remembering", "Responding"],
-      answer: 1,
-      explanation: "Evaluating is the component of active listening that involves critically analyzing information to determine its accuracy and separate fact from opinion."
-    },
-    {
-      type: "multiple_choice",
       question: "Which type of narrative report provides a statement of a problem, a variety of solutions, and then suggests the best solution?",
       choices: ["Justification report", "Progress report", "Description report", "Recommendation report"],
       answer: 3,
@@ -21637,13 +21581,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["3 questions", "5 questions", "8 questions", "10 questions"],
       answer: 1,
       explanation: "The framework specifies generating 5 high-difficulty multiple-choice questions based on the most challenging or easily confused details in each chapter."
-    },
-    {
-      type: "multiple_choice",
-      question: "According to the extraction framework, what information must be included with each potential exam question generated?",
-      choices: ["Only the correct answer", "The correct answer and question difficulty level", "The correct answer and the specific page reference/section", "Only the page reference"],
-      answer: 2,
-      explanation: "The framework requires that generated exam questions include the correct answers AND the specific page reference/section to allow for verification and study reference."
     },
     {
       type: "multiple_choice",
@@ -22578,13 +22515,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "According to the staff meeting notes, what would cause a reduction in the city's financial resilience assessment from 'AAA' to 'AA'?",
-      choices: ["A 20% increase in long term liabilities", "A sustained decline in available general fund balance below 7.5% of spending", "A decline in property values of 10%", "An increase in debt capacity of 15%"],
-      answer: 1,
-      explanation: "According to the meeting notes, although not expected, a sustained decline in available general fund balance below 7.5% of spending would reduce the city's financial resilience assessment to 'AA' from 'AAA'."
-    },
-    {
-      type: "multiple_choice",
       question: "When is the VBFD recruit graduation scheduled for according to the January 2025 staff meeting?",
       choices: ["January 15th", "February 28th", "March 7th", "April 1st"],
       answer: 2,
@@ -22603,13 +22533,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["December 18th", "January 8th", "January 18th", "February 1st"],
       answer: 2,
       explanation: "The original deadline for suggestions on SOP 5.01 Incident Command was December 18th, but it was extended to January 18th to get more input."
-    },
-    {
-      type: "multiple_choice",
-      question: "According to the February 2025 Staff Meeting Notes, when is the graduation date for Recruit Class 17?",
-      choices: ["February 17, 2025", "March 7, 2025", "April 1, 2025", "February 14, 2025"],
-      answer: 1,
-      explanation: "The document states that graduation is still slated for March 7, 2025, with a total of 50 recruits in the program."
     },
     {
       type: "multiple_choice",
@@ -22645,13 +22568,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["Submit directly to the Fire Chief", "Utilize your Chain of Command", "Contact the Finance department", "File a request with the Training Bureau"],
       answer: 1,
       explanation: "The Operations section provides a reminder to utilize your Chain of Command for all station modifications."
-    },
-    {
-      type: "multiple_choice",
-      question: "When did the Volunteer Support Technician Recruit Academy's EVOC get rescheduled to?",
-      choices: ["The last weekend in March", "The first weekend in April", "The second weekend in March", "The third weekend in April"],
-      answer: 1,
-      explanation: "According to the Volunteers section, EVOC is now re-scheduled for the first weekend in April."
     },
     {
       type: "multiple_choice",
@@ -22736,13 +22652,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["Classroom lectures on fire behavior", "Hands-on delivery with the TICs (Thermal Imaging Cameras)", "Online simulation exercises", "Written examinations"],
       answer: 1,
       explanation: "The staff meeting notes specifically mention that 'the hands-on delivery with the TICs is a great addition to the training' for Company In-Service."
-    },
-    {
-      type: "multiple_choice",
-      question: "What is the name of VBFD's newest therapy K9 that was welcomed in March 2025?",
-      choices: ["Max", "Ari", "Duke", "Rex"],
-      answer: 1,
-      explanation: "According to the PIO section, a press conference was held on 03/28/2025 announcing that 'Virginia Beach Fire Department Welcomes \"Ari,\" Its Newest Therapy K9, to the Family.'"
     },
     {
       type: "multiple_choice",
@@ -22876,13 +22785,6 @@ const GENERATED_QUESTION_BANK = {
       choices: ["ISO audit", "Accreditation audit", "State compliance audit", "Training compliance audit"],
       answer: 1,
       explanation: "The Training Bureau section states to verify fire certifications are up to date at your rank because an accreditation audit is ongoing."
-    },
-    {
-      type: "multiple_choice",
-      question: "According to the PIO section, approximately how many Facebook followers did VBFD have in July 2025?",
-      choices: ["39,315 followers", "49,315 followers", "59,315 followers", "29,315 followers"],
-      answer: 1,
-      explanation: "The Social Media Stats for July showed Facebook Followers: 49,315."
     },
     {
       type: "multiple_choice",
