@@ -17496,13 +17496,6 @@ const GENERATED_QUESTION_BANK = {
     },
     {
       type: "multiple_choice",
-      question: "By what time must a member enter their name into TeleStaff on the day before they wish to work a callback?",
-      choices: ["0700 hours", "0800 hours", "1200 hours", "2000 hours"],
-      answer: 1,
-      explanation: "Members must enter their name into TeleStaff by 0800 hours on the day before they wish to work a callback."
-    },
-    {
-      type: "multiple_choice",
       question: "After how many days assigned to operations are Probationary Firefighters permitted to work callbacks, reliefs, and mandatory holdovers?",
       choices: ["After 30 days", "After 60 days", "After 90 days", "After 6 months"],
       answer: 2,
