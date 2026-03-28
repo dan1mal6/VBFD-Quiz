@@ -717,13 +717,6 @@ const QUESTION_BANK = {
     // ── PRE-HOSPITAL SKILLS ──
     {
       type: "multiple_choice",
-      question: "Per TEMS pre-hospital skills delineation, which providers can perform oral endotracheal intubation on patients ≥12 years old?",
-      choices: ["EMT only", "Advanced EMT, Intermediate, and Paramedic", "Paramedic only", "All provider levels"],
-      answer: 1,
-      explanation: "Oral endotracheal intubation for patients ≥12 years old is authorized for Advanced EMT, Intermediate, and Paramedic levels."
-    },
-    {
-      type: "multiple_choice",
       question: "Per TEMS skills delineation, which procedure is authorized for Paramedic ONLY?",
       choices: ["Intraosseous cannulation", "Manual defibrillation", "Needle/kit cricothyrotomy", "External jugular cannulation"],
       answer: 2,
