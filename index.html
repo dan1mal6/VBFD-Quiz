@@ -930,6 +930,132 @@
       }
     }
 
+    /* ── ADMIN FEATURE ────────────────────────────────────────────────────────── */
+
+    .remove-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: transparent;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: .3rem .7rem;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--text-sm);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      margin-top: .4rem;
+      align-self: flex-start;
+    }
+    .remove-btn:hover { border-color: var(--red); color: var(--red); background: #fdf2f2; }
+    .remove-btn.admin-active { border-color: var(--red); color: var(--red); }
+    .remove-btn.admin-locked { opacity: 0.35; cursor: not-allowed; }
+
+    /* Admin unlock button — bottom-left corner, mirrors the flag float button */
+    #admin-unlock-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: var(--navy);
+      color: #aaa;
+      border: none;
+      border-radius: 50px;
+      padding: .55rem 1.1rem;
+      font-size: .78rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      gap: .4rem;
+      transition: color .2s, transform .15s;
+    }
+    #admin-unlock-btn.visible { display: flex; }
+    #admin-unlock-btn.unlocked { color: var(--red); }
+    #admin-unlock-btn:hover { transform: translateY(-2px); }
+
+    /* Admin password modal */
+    #admin-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(4px);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    #admin-modal.open { display: flex; }
+    .admin-modal-inner {
+      background: var(--white);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 360px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,.3);
+      text-align: center;
+    }
+    .admin-modal-inner h3 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .3rem; }
+    .admin-modal-inner p { font-size: .82rem; color: var(--text-sm); margin-bottom: 1.2rem; }
+    #admin-password-input {
+      width: 100%;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: .65rem .9rem;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: .2em;
+      margin-bottom: .8rem;
+      outline: none;
+      transition: border-color .15s;
+      box-sizing: border-box;
+    }
+    #admin-password-input:focus { border-color: var(--navy); }
+    #admin-password-input.error { border-color: var(--red); animation: shake .3s; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .admin-modal-btns { display: flex; gap: .6rem; }
+    .btn-admin-submit {
+      flex: 1; background: var(--navy); color: white; border: none;
+      border-radius: 8px; padding: .65rem; font-size: .9rem; font-weight: 700;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-admin-submit:hover { background: var(--navy-lt); }
+    .btn-admin-cancel {
+      flex: 1; background: transparent; color: var(--text-sm);
+      border: 1.5px solid #ddd; border-radius: 8px; padding: .65rem;
+      font-size: .9rem; font-weight: 700; cursor: pointer;
+    }
+
+    /* Deleted questions clipboard button */
+    #deleted-copy-btn {
+      position: fixed;
+      bottom: 4.5rem;
+      left: 1.5rem;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: .55rem 1.1rem;
+      font-size: .78rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      gap: .4rem;
+      transition: transform .15s;
+    }
+    #deleted-copy-btn.visible { display: flex; }
+    #deleted-copy-btn:hover { transform: translateY(-2px); }
+
     /* ── FLAG FEATURE ─────────────────────────────────────────────────────────── */
 
     .flag-btn {
@@ -1182,6 +1308,25 @@
     </div>
   </section>
 
+  <!-- ── ADMIN UNLOCK BUTTON ── -->
+  <button id="admin-unlock-btn" onclick="toggleAdminMode()">🔒 Admin</button>
+
+  <!-- ── DELETED QUESTIONS COPY BUTTON ── -->
+  <button id="deleted-copy-btn" onclick="copyDeletedToClipboard()">📋 Copy Deleted (<span id="deleted-count">0</span>)</button>
+
+  <!-- ── ADMIN PASSWORD MODAL ── -->
+  <div id="admin-modal" role="dialog" aria-modal="true">
+    <div class="admin-modal-inner">
+      <h3>🔐 Admin Access</h3>
+      <p>Enter your admin password to enable question removal.</p>
+      <input type="password" id="admin-password-input" placeholder="••••••••" autocomplete="off" />
+      <div class="admin-modal-btns">
+        <button class="btn-admin-cancel" onclick="closeAdminModal()">Cancel</button>
+        <button class="btn-admin-submit" onclick="submitAdminPassword()">Unlock</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ── FLOATING FLAG BUTTON ── -->
   <button id="flag-float-btn" onclick="showFlaggedPanel()">
     🚩 Flagged
@@ -1248,6 +1393,8 @@
           floatBtn.classList.remove('visible');
         }
       }
+      // Show admin button on quiz and results screens
+      updateAdminBtnVisibility(id);
     }
 
     function showToast(msg, duration = 2000) {
@@ -1435,6 +1582,20 @@
       if (isAlreadyFlagged) flagBtn.classList.add('flagged');
       flagBtn.addEventListener('click', toggleCurrentFlag);
       body.insertBefore(flagBtn, fb);
+
+      // Remove from Quiz Bank button — admin only
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-btn' + (adminUnlocked ? ' admin-active' : ' admin-locked');
+      removeBtn.id = 'inline-remove-btn';
+      removeBtn.textContent = '🗑 Remove from Quiz Bank';
+      removeBtn.addEventListener('click', function() {
+        if (!adminUnlocked) {
+          showToast('Admin mode required. Tap 🔒 Admin to unlock.', 2000);
+          return;
+        }
+        removeCurrentQuestion();
+      });
+      body.insertBefore(removeBtn, fb);
 
       // Next button
       const nextBtn = document.createElement('button');
@@ -1789,6 +1950,206 @@
       startQuiz();
     }
 
+    // ── ADMIN FEATURE ─────────────────────────────────────────────────────────────
+
+    const ADMIN_PASSWORD_HASH = '9e2b49e15f2b638438a452ae50ee77c5b35f82f4b8f73b7ab9d3a93f0234c2e1'; // SHA-256 of VBFD2026!
+    const DELETED_STORAGE_KEY = 'vbfd_deleted_questions';
+    let adminUnlocked = false;
+
+    /** Simple SHA-256 hash using Web Crypto API */
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    /** Opens the admin password modal */
+    function toggleAdminMode() {
+      if (adminUnlocked) {
+        // Lock it back
+        adminUnlocked = false;
+        updateAdminUI();
+        showToast('Admin mode locked.', 1500);
+      } else {
+        document.getElementById('admin-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('admin-password-input').focus(), 100);
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.remove('open');
+      document.getElementById('admin-password-input').value = '';
+      document.getElementById('admin-password-input').classList.remove('error');
+      document.body.style.overflow = '';
+    }
+
+    async function submitAdminPassword() {
+      const input = document.getElementById('admin-password-input');
+      const hash = await sha256(input.value);
+      if (hash === ADMIN_PASSWORD_HASH) {
+        adminUnlocked = true;
+        closeAdminModal();
+        updateAdminUI();
+        showToast('✅ Admin mode unlocked.', 2000);
+      } else {
+        input.classList.add('error');
+        input.value = '';
+        setTimeout(() => input.classList.remove('error'), 600);
+        showToast('Incorrect password.', 1800);
+      }
+    }
+
+    /** Updates all admin-related UI elements */
+    function updateAdminUI() {
+      const unlockBtn = document.getElementById('admin-unlock-btn');
+      if (unlockBtn) {
+        unlockBtn.textContent = adminUnlocked ? '🔓 Admin' : '🔒 Admin';
+        unlockBtn.classList.toggle('unlocked', adminUnlocked);
+      }
+      // Update inline remove button state if visible
+      const removeBtn = document.getElementById('inline-remove-btn');
+      if (removeBtn) {
+        removeBtn.classList.toggle('admin-active', adminUnlocked);
+        removeBtn.classList.toggle('admin-locked', !adminUnlocked);
+      }
+      // Update deleted copy button visibility
+      updateDeletedUI();
+    }
+
+    /** Shows/hides the admin unlock button based on current screen */
+    function updateAdminBtnVisibility(screenId) {
+      const btn = document.getElementById('admin-unlock-btn');
+      if (!btn) return;
+      if (screenId === 'screen-quiz' || screenId === 'screen-results') {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    /** Removes the current question from the quiz session and records it for deletion */
+    function removeCurrentQuestion() {
+      const q = quizQuestions[currentQIndex];
+      if (!q) return;
+
+      // Save to deleted list in localStorage
+      const deleted = getDeletedQuestions();
+      const key = q.question;
+      if (!deleted[key]) {
+        deleted[key] = Object.assign({}, q, { _category: q._category || selectedCategory, _deletedAt: new Date().toISOString() });
+        try {
+          localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deleted));
+        } catch(e) { showToast('Storage error saving deletion.', 2000); return; }
+      }
+
+      // Remove from the current quiz session array
+      quizQuestions.splice(currentQIndex, 1);
+
+      updateDeletedUI();
+      showToast('✅ Removed from quiz. Copy Deleted list to send to Claude.', 2500);
+
+      // Advance: if questions remain go to next; if we removed the last one, show results
+      if (quizQuestions.length === 0) {
+        showResults();
+      } else {
+        // Keep index in bounds
+        if (currentQIndex >= quizQuestions.length) currentQIndex = quizQuestions.length - 1;
+        // Update counter
+        document.getElementById('q-num-label').textContent = `${currentQIndex + 1} / ${quizQuestions.length}`;
+        renderQuestion();
+      }
+    }
+
+    function getDeletedQuestions() {
+      try {
+        const raw = localStorage.getItem(DELETED_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch(e) { return {}; }
+    }
+
+    function updateDeletedUI() {
+      const deleted = getDeletedQuestions();
+      const count = Object.keys(deleted).length;
+      const btn = document.getElementById('deleted-copy-btn');
+      const countEl = document.getElementById('deleted-count');
+      if (btn) {
+        btn.classList.toggle('visible', adminUnlocked && count > 0);
+      }
+      if (countEl) countEl.textContent = count;
+    }
+
+    /** Copies deleted questions as formatted text for pasting to Claude */
+    function copyDeletedToClipboard() {
+      const deleted = getDeletedQuestions();
+      const entries = Object.entries(deleted);
+      if (entries.length === 0) { showToast('No deleted questions to copy.', 1800); return; }
+
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+      const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const lines = [
+        '# VBFD Quiz — Questions Marked for Permanent Removal',
+        `# Generated: ${today}`,
+        `# Total to remove: ${entries.length}`,
+        '', '---', ''
+      ];
+
+      entries.forEach(([key, q], idx) => {
+        lines.push(`## Question ${idx + 1}`);
+        lines.push(`Category: ${q._category || 'Unknown'}`);
+        lines.push(`Type: ${q.type}`);
+        lines.push('');
+        lines.push(`Q: ${q.question}`);
+        lines.push('');
+        if (q.type === 'multiple_choice' && q.choices) {
+          q.choices.forEach((c, i) => lines.push(`  ${letters[i]}. ${c}${i === q.answer ? '  [CORRECT]' : ''}`));
+          lines.push('');
+          lines.push(`Correct Answer: ${letters[q.answer]}. ${q.choices[q.answer]}`);
+        } else if (q.type === 'matching' && q.pairs) {
+          q.pairs.forEach(p => lines.push(`  ${p.term} → ${p.definition}`));
+        } else if (q.type === 'short_answer') {
+          lines.push(`Correct Answer: ${q.correctAnswer || '(see explanation)'}`);
+        }
+        if (q.explanation) { lines.push(''); lines.push(`Explanation: ${q.explanation}`); }
+        lines.push(''); lines.push('---'); lines.push('');
+      });
+
+      lines.push('# END — Please permanently remove all questions listed above from the question bank files.');
+
+      const text = lines.join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            showToast(`✅ Copied ${entries.length} deletion${entries.length > 1 ? 's' : ''} to clipboard!`, 2500);
+            // Clear the deleted list after copying so it doesn't accumulate
+            localStorage.removeItem(DELETED_STORAGE_KEY);
+            updateDeletedUI();
+          })
+          .catch(() => fallbackCopyAdmin(text));
+      } else {
+        fallbackCopyAdmin(text);
+      }
+    }
+
+    function fallbackCopyAdmin(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('✅ Copied to clipboard!', 2500);
+        localStorage.removeItem(DELETED_STORAGE_KEY);
+        updateDeletedUI();
+      } catch(e) { showToast('Copy failed — try manually.', 2500); }
+      document.body.removeChild(ta);
+    }
+
+    // Submit password on Enter key
+    document.getElementById('admin-password-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitAdminPassword();
+    });
+
     // ── FLAG FEATURE ─────────────────────────────────────────────────────────────
 
     const FLAG_STORAGE_KEY = 'vbfd_flagged_questions';
@@ -2049,7 +2410,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Render categories on load so they're ready
       renderCategoryGrid();
-      updateFlagUI(); // restore badge count from localStorage on page load
+      updateFlagUI();    // restore flag badge count from localStorage on page load
+      updateDeletedUI(); // restore deleted count from localStorage on page load
     });
   </script>
 </body>
